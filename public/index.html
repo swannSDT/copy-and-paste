@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Copy and Paste, du texte et des fichiers d'un appareil à l'autre</title>
+  <meta name="description" content="Colle un texte ou dépose une image sur ton PC, récupère-les sur ton téléphone. Même wifi, sans compte. Tout s'efface après une heure.">
+  <meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#191816" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="top">
+    <h1>Copy and Paste</h1>
+    <p id="status" class="status" role="status">Connexion…</p>
+  </header>
+
+  <main>
+    <section class="compose" aria-label="Déposer">
+      <label for="text">Colle ton texte</label>
+      <textarea id="text" rows="6" maxlength="100000" placeholder="Texte, lien, adresse…"></textarea>
+
+      <div class="row">
+        <button id="send" type="button" class="primary">Partager le texte</button>
+        <label class="file-button">
+          <span>Ajouter images ou vidéos</span>
+          <input id="files" type="file" accept="image/jpeg,image/png,image/gif,image/webp,image/avif,image/heic,image/heif,video/mp4,video/webm,video/quicktime" multiple>
+        </label>
+        <label class="pin">
+          PIN facultatif
+          <input id="pin" type="password" inputmode="numeric" pattern="[0-9]*" minlength="4" maxlength="8" autocomplete="off" placeholder="4 à 8 chiffres">
+        </label>
+      </div>
+
+      <p id="error" class="error" role="alert" hidden></p>
+      <div id="progress" class="progress" hidden>
+        <p id="progress-label"></p>
+        <progress id="progress-bar" max="100" value="0"></progress>
+      </div>
+      <p class="warning"><strong>Tout le réseau voit ce que tu déposes.</strong> Sur un wifi public, d'école ou d'entreprise, mets un PIN. Pas de mot de passe ici.</p>
+    </section>
+
+    <section aria-labelledby="shared-title">
+      <h2 id="shared-title">Sur ce réseau</h2>
+      <p id="empty" class="empty">Rien pour l'instant. Dépose quelque chose, il apparaîtra ici sur tes autres appareils.</p>
+      <ul id="items" class="items"></ul>
+    </section>
+
+    <section class="pair" aria-labelledby="pair-title">
+      <h2 id="pair-title">L'autre appareil ne voit rien ?</h2>
+      <p>Il est sûrement en 4G, sur un VPN ou sur un autre réseau. Relie-le avec un code.</p>
+      <div class="pair-grid">
+        <div>
+          <button id="make-code" type="button">Afficher un code</button>
+          <div id="code-box" hidden>
+            <p id="code" class="code"></p>
+            <img id="qr" alt="QR code qui ouvre le site avec ce code" width="180" height="180">
+            <p class="hint">Valable 10 minutes.</p>
+          </div>
+        </div>
+        <form id="join-form">
+          <label for="join-code">Entrer un code</label>
+          <div class="row">
+            <input id="join-code" autocapitalize="characters" autocomplete="off" spellcheck="false" maxlength="6" placeholder="ABC234">
+            <button type="submit">Rejoindre</button>
+          </div>
+        </form>
+      </div>
+      <button id="leave" type="button" hidden>Revenir à mon réseau</button>
+    </section>
+  </main>
+
+  <footer>
+    <a href="/mentions-legales">Mentions légales et signalement</a>
+  </footer>
+
+  <template id="item-template">
+    <li class="item">
+      <div class="item-body"></div>
+      <div class="item-actions">
+        <span class="expiry"></span>
+        <button type="button" class="delete">Supprimer</button>
+      </div>
+    </li>
+  </template>
+
+  <script src="/app.js" type="module"></script>
+</body>
+</html>
