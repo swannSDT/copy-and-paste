@@ -232,6 +232,10 @@ async function handleApi(request, env, url) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    if (url.protocol === "http:" && url.hostname !== "localhost") {
+      url.protocol = "https:";
+      return Response.redirect(url.href, 301);
+    }
     if (!url.pathname.startsWith("/api/")) return env.ASSETS.fetch(request);
     try {
       return await handleApi(request, env, url);
