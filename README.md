@@ -27,7 +27,7 @@ npm run smoke
 1. Créer le bucket R2 `copy-and-paste-files`.
 2. Ajouter une règle de cycle de vie sur ce bucket : suppression après 1 jour et abandon des envois incomplets après 1 jour. L'alarme du salon supprime déjà tout après une heure, cette règle sert de filet.
 3. Définir le secret `ROOM_SECRET` avec une longue valeur aléatoire (`npx wrangler secret put ROOM_SECRET`).
-4. Relier le repo dans Workers Builds, ou lancer `npm run deploy`.
+4. Le repo est relié à Workers Builds : chaque push sur `main` déploie le site. `npm run deploy` reste possible à la main.
 
 ## Limites
 
